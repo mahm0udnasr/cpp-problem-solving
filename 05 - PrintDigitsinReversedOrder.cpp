@@ -18,6 +18,15 @@ void PrintDigitsReversed(int number) {
   for(int i = DigitNumberToString.length(); i >= 0; i--) {
     cout << DigitNumberToString[i] << endl;
   }
+  /*
+    - another solution
+    int remainder = 0;
+    while(number > 0) {
+      remainder = number %10;
+      number /= 10;
+      cout << remainder << endl;
+    }
+  */
 }
 
 int main() {
