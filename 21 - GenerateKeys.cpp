@@ -28,7 +28,7 @@ char GetRandomCharacter(enCharType CharType)
     case enCharType::SmallLetter:
     {
         return char(RandomNumber(97, 122));
-        break; // break is not necessary after return.
+        break;
     }
     case enCharType::CapitalLetter:
     {
@@ -74,7 +74,6 @@ string GenerateKey()
 
 void GenerateKeys(short NumberOfKeys) {
     for (int i = 1; i <= NumberOfKeys; i++) {
-        cout << "\n";
         cout << "Key [";
         if (i <= 9) {
             cout << "0" << i;
