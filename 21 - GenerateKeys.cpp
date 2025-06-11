@@ -7,19 +7,18 @@ int ReadPositiveNumber(string Msg) {
     do {
         cout << Msg;
         cin >> number;
-    } while (number <= 0);
+    } while (number <= 0 || number >= 100);
     return number;
 }
 
-char RandomCapitalChar() {
-    int randomNumber = rand() % (65 - 90 + 1) + 65;
-    return char(randomNumber);
+char GetRandomCapitalChar() {
+    return char(rand() % (65 - 90 + 1) + 65);
 }
 
 string GenerateRandomKey() {
     string Key;
     for (int i = 1; i <= 4; i++) {
-        Key += RandomCapitalChar();
+        Key += GetRandomCapitalChar();
     }
     return Key;
 }
