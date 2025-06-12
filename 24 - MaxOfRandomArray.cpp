@@ -31,7 +31,7 @@ void PrintArray(int arr[100], int ArrayLength) {
 int MaxNumberInArray(int arr[100], int ArrayLength) {
     int temp = 0;
     for (int i = 0; i <= ArrayLength - 1; i++) {
-        if (temp <= arr[i]) {
+        if (temp < arr[i]) {
             temp = arr[i];
         }
     }
