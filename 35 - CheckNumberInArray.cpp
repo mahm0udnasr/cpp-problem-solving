@@ -27,25 +27,27 @@ void PrintArray(int arr[100], int arrLength) {
     cout << "\n";
 }
 
-// short FindNumberInArray(int arr[100], int arrLength) {
-//     short SearchNumber = ReadPositiveNumber("\nEnter A Number To Search: ");
-//     cout << "\nNumber you are looking for is: " << SearchNumber << "\n";
-
-//     for (int i = 0; i <= arrLength - 1; i++) {
-//         if (SearchNumber == arr[i]) {
-//             return arr[i];
-//         }
-//     }
-//     return -1;
-// }
-
-bool isNumberInArray(int Number,int arr[100], int arrLength) {
-      for (int i = 0; i <= arrLength - 1; i++) {
+short FindNumberPositionInArray(int Number, int arr[100], int arrLength) {
+    for (int i = 0; i <= arrLength - 1; i++) {
         if (Number == arr[i]) {
-            return true;
+            return i;
         }
     }
-    return false;
+    return -1;
+}
+
+// bool isNumberInArray(int Number,int arr[100], int arrLength) {
+//       for (int i = 0; i <= arrLength - 1; i++) {
+//         if (Number == arr[i]) {
+//             return true;
+//         }
+//     }
+//     return false;
+// }
+
+
+bool isNumberInArray(int Number,int arr[100], int arrLength) {
+    return FindNumberPositionInArray(Number, arr, arrLength) != -1;
 }
 
 int main() {
