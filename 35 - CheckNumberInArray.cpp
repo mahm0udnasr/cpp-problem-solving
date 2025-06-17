@@ -27,16 +27,25 @@ void PrintArray(int arr[100], int arrLength) {
     cout << "\n";
 }
 
-short FindNumberInArray(int arr[100], int arrLength) {
-    short SearchNumber = ReadPositiveNumber("\nEnter A Number To Search: ");
-    cout << "\nNumber you are looking for is: " << SearchNumber << "\n";
+// short FindNumberInArray(int arr[100], int arrLength) {
+//     short SearchNumber = ReadPositiveNumber("\nEnter A Number To Search: ");
+//     cout << "\nNumber you are looking for is: " << SearchNumber << "\n";
 
-    for (int i = 0; i <= arrLength - 1; i++) {
-        if (SearchNumber == arr[i]) {
-            return arr[i];
+//     for (int i = 0; i <= arrLength - 1; i++) {
+//         if (SearchNumber == arr[i]) {
+//             return arr[i];
+//         }
+//     }
+//     return -1;
+// }
+
+bool isNumberInArray(int Number,int arr[100], int arrLength) {
+      for (int i = 0; i <= arrLength - 1; i++) {
+        if (Number == arr[i]) {
+            return true;
         }
     }
-    return -1;
+    return false;
 }
 
 int main() {
@@ -49,8 +58,11 @@ int main() {
 
     cout << "\nArray 1 elements: ";
     PrintArray(arr, arrLength);
-    short searchNumber = FindNumberInArray(arr, arrLength);
-    if (searchNumber != -1) {
+
+    int searchNumber = ReadPositiveNumber("\nEnter A Number To Search: ");
+    cout << "\nNumber you are looking for is: " << searchNumber << "\n";
+
+    if (isNumberInArray(searchNumber, arr, arrLength)) {
         cout << "\nyes, The number is found :-)" << endl;
     }
     else {
