@@ -28,14 +28,14 @@ void PrintArray(int arr[100], int ArrayLength) {
     cout << "\n";
 }
 
-int OddNumberCountInArray(int arr[100], int arrLength) {
-    int OddNumberCounter = 0;
+int EvenNumberCountInArray(int arr[100], int arrLength) {
+    int EvenNumberCounter = 0;
     for (int i = 0; i < arrLength; i++) {
-        if (arr[i] % 2 != 0) {
-            OddNumberCounter++;
+        if (arr[i] % 2 == 0) {
+            EvenNumberCounter++;
         }
     }
-    return OddNumberCounter;
+    return EvenNumberCounter;
 }
 
 int main() {
@@ -46,7 +46,7 @@ int main() {
     cout << "\nArray 1 Elements: ";
     PrintArray(arr, arrLength);
 
-    cout << "\nOdd Numbers Count Is: " << OddNumberCountInArray(arr, arrLength) << endl;
+    cout << "\nEven Numbers Count Is: " << EvenNumberCountInArray(arr, arrLength) << endl;
 
     return 0;
 }
