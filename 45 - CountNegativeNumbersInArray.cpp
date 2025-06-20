@@ -28,25 +28,26 @@ void PrintArray(int arr[100], int ArrayLength) {
     cout << "\n";
 }
 
-int PositiveNumberCountInArray(int arr[100], int arrLength) {
-    int PositiveNumberCounter = 0;
+int NegativeNumberCountInArray(int arr[100], int arrLength) {
+    int NegativeNumberCounter = 0;
     for (int i = 0; i < arrLength; i++) {
-        if (arr[i] > 0) {
-            PositiveNumberCounter++;
+        if (arr[i] < 0) {
+            NegativeNumberCounter++;
         }
     }
-    return PositiveNumberCounter;
+    return NegativeNumberCounter;
 }
 
 int main() {
     srand((unsigned)time(NULL));
+    
     int arr[100], arrLength = 0;
     FillArrayWithRandomNumbers(arr, arrLength);
 
     cout << "\nArray 1 Elements: ";
     PrintArray(arr, arrLength);
 
-    cout << "\nPositive Numbers Count Is: " << PositiveNumberCountInArray(arr, arrLength) << endl;
+    cout << "\nNegative Numbers Count Is: " << NegativeNumberCountInArray(arr, arrLength) << endl;
 
     return 0;
 }
