@@ -18,6 +18,7 @@ struct stGameResult {
     short GameRounds = 0;
     short PlayerWinTimes = 0;
     short ComputerWinTimes = 0;
+    short DrawTimes = 0;
     enWinner GameWinner;
     string WinnerName = "";
 };
@@ -26,11 +27,20 @@ int RandomNumber(int From, int To) {
     return rand() % (To - From + 1) + From;
 }
 
+string ChoiceName(enGameChoice Choice) {
+    string arrGameChoice[3] = { "Stone", "Paper", "Scissors" };
+    return arrGameChoice[Choice - 1];
+}
+
+string WinnerName(enWinner Winner) {
+    string arrWinnerName[3] = { "Player", "Computer", "No Winner" };
+    return arrWinnerName[Winner - 1];
+}
+
 enWinner WhoWonTheRound(stRoundInfo RoundInfo) {
     if (RoundInfo.PlayerChoice == RoundInfo.ComputerChoice) {
         return enWinner::Draw;
     }
-
     switch (RoundInfo.PlayerChoice) {
         case enGameChoice::Stone:
             if (RoundInfo.ComputerChoice == enGameChoice::Paper) {
@@ -51,22 +61,46 @@ enWinner WhoWonTheRound(stRoundInfo RoundInfo) {
     return enWinner::Player;
 }
 
-enWinner WhoWonTheGame(short Player1WinTimes, short ComputerWinTimes) {
-
+enWinner WhoWonTheGame(short PlayerWinTimes, short ComputerWinTimes) {
+    if (PlayerWinTimes > ComputerWinTimes) {
+        return enWinner::Player;
+    }
+    else if (ComputerWinTimes > PlayerWinTimes) {
+        return enWinner::Computer;
+    }
+    else {
+        return enWinner::Draw;
+    }
 }
 
-string ChoiceName(enGameChoice Choice) {
-    string arrGameChoice[3] = { "Stone", "Paper", "Scissors" };
-    return arrGameChoice[Choice - 1];
+stGameResult FillGameResults(int GameRounds, short PlayerWinTimes, short ComputerWinTime, short DrawTimes) {
+    stGameResult GameResults;
+
+    GameResults.GameRounds = GameRounds;
+    GameResults.PlayerWinTimes = PlayerWinTimes;
+    GameResults.ComputerWinTimes = ComputerWinTime;
+    GameResults.DrawTimes = DrawTimes;
+    GameResults.GameWinner = WhoWonTheGame(PlayerWinTimes, ComputerWinTime);
+    GameResults.WinnerName = WinnerName(GameResults.GameWinner);
+
+    return GameResults;
 }
 
-string WinnerName(enWinner Winner) {
-    string arrWinnerName[3] = { "Player", "Computer", "No Winner" };
-    return arrWinnerName[Winner - 1];
-}
+
 
 void SetWinnerScreenColor(enWinner Winner) {
-
+    switch (Winner) {
+        case enWinner::Player:
+            system("color 2F");
+            break;
+        case enWinner::Computer:
+            system("color 4f");
+            cout << "\a";
+            break;
+        case enWinner::Draw:
+            system("color 6f");
+            break;
+    }
 }
 
 enGameChoice ReadPlayerChoice() {
@@ -114,16 +148,23 @@ stGameResult PlayGame(short RoundsNumber) {
         }
         PrintRoundResults(RoundInfo);
     }
+    return FillGameResults(RoundsNumber, PlayerWinTimes, ComputerWinTimes, DrawTimes);
 }
 
 void ShowGameOverScreen() {
-    cout << "\t------------------------------------------\n";
-    cout << "\t\t +++ G a m e O v e r +++ \n";
-    cout << "\t------------------------------------------\n";
+    cout << "\t\t------------------------------------------\n";
+    cout << "\t\t         +++ G a m e O v e r +++ \n";
+    cout << "\t\t------------------------------------------\n";
 }
 
 void ShowFinalGameResults(stGameResult GameResults) {
-
+    cout << "\t\t" << "_______________________[Game Results]____________________\n\n";
+    cout << "\t\t" << "Game Rounds          : " << GameResults.GameRounds << endl;
+    cout << "\t\t" << "Player Won Times     : " << GameResults.PlayerWinTimes << endl;
+    cout << "\t\t" << "Computer Won Times   : " << GameResults.ComputerWinTimes << endl;
+    cout << "\t\t" << "Draw Times           : " << GameResults.DrawTimes << endl;
+    cout << "\t\t" << "Final Winner         : " << GameResults.WinnerName << endl;
+    cout << "\t\t" << "__________________________________________________________\n\n";
 }
 
 short ReadNumberOfRounds() {
@@ -137,7 +178,8 @@ short ReadNumberOfRounds() {
 }
 
 void ResetScreen() {
-
+    system("cls");
+    system("color 0f");
 }
 
 void StartGame() {
@@ -155,5 +197,6 @@ void StartGame() {
 
 int main() {
     srand((unsigned)time(NULL));
+    StartGame();
     return 0;
 }
