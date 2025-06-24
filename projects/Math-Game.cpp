@@ -36,6 +36,36 @@ void ResetScreen() {
     system("color 0f");
 }
 
+short ReadNumberOfQuestion() {
+    short QuestionNumber = 1;
+    do
+    {
+        cout << "Enter Question Number from 1 to 10: ";
+        cin >> QuestionNumber;
+    } while (QuestionNumber < 1 || QuestionNumber > 10);
+    return QuestionNumber;
+}
+
+enQuestionsLevel ReadQuestionLevel() {
+    int QuestionLevel = 1;
+    do
+    {
+        cout << "Select Question Level\n [1] Easy [2] Medium [3] Hard [4] Mix : ";
+        cin >> QuestionLevel;
+    } while (QuestionLevel < 1 || QuestionLevel > 4);
+    return (enQuestionsLevel)QuestionLevel;
+}
+
+enOperationType ReadOperationType() {
+    int OpType = 1;
+    do
+    {
+        cout << "Select Operation Type\n[1] +\n[2] -\n[3] *\n[4] /\n[5] Mix : ";
+        cin >> OpType;
+    } while (OpType < 1 || OpType > 5);
+    return (enOperationType)OpType;
+}
+
 string GetOpTypeSymbol(enOperationType OpType)
 {
     switch (OpType)
@@ -155,24 +185,28 @@ void AskAndCorrectQuestionListAnswers(stQuiz& Quiz)
 }
 
 
+void PlayMathGame()
+{
+    stQuiz Quiz;
+    Quiz.NumberOfQuestions = ReadNumberOfQuestion();
+    Quiz.QuestionsLevel = ReadQuestionLevel();
+    Quiz.OpType = ReadOperationType();
+    for (short QuestionNumber = 0; QuestionNumber < Quiz.NumberOfQuestions; QuestionNumber++)
+    {
+        Quiz.QuestionList[QuestionNumber] = GenerateQuestion(Quiz.QuestionsLevel, Quiz.OpType);
+    }
+    AskAndCorrectQuestionListAnswers(Quiz);
+    cout << "\nQuiz Completed! Right Answers: " << Quiz.NumberOfRightAnswers
+        << ", Wrong Answers: " << Quiz.NumberOfWrongAnswers << "\n";
+    cout << (Quiz.isPass ? "You Passed the Quiz!\n" : "You Failed the Quiz!\n");
+}
 
 void StartGame() {
     char PlayAgain = 'Y';
     do
     {
         ResetScreen();
-        stQuiz Quiz;
-        Quiz.NumberOfQuestions = 5;
-        Quiz.QuestionsLevel = enQuestionsLevel::EasyLevel;
-        Quiz.OpType = enOperationType::MixOp;
-        for (short QuestionNumber = 0; QuestionNumber < Quiz.NumberOfQuestions; QuestionNumber++)
-        {
-            Quiz.QuestionList[QuestionNumber] = GenerateQuestion(Quiz.QuestionsLevel, Quiz.OpType);
-        }
-        AskAndCorrectQuestionListAnswers(Quiz);
-        cout << "\nQuiz Completed! Right Answers: " << Quiz.NumberOfRightAnswers
-            << ", Wrong Answers: " << Quiz.NumberOfWrongAnswers << "\n";
-        cout << (Quiz.isPass ? "You Passed the Quiz!\n" : "You Failed the Quiz!\n");
+        PlayMathGame();
         cout << endl << "Do you want to play again [y | n]: ";
         cin >> PlayAgain;
     } while (PlayAgain == 'Y' || PlayAgain == 'y');
