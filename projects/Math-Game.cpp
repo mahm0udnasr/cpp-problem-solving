@@ -170,13 +170,11 @@ void AskAndCorrectQuestionListAnswers(stQuiz& Quiz)
         if (Quiz.QuestionList[QuestionNumber].PlayerAnswer == Quiz.QuestionList[QuestionNumber].CorrectAnswer)
         {
             cout << "Correct!\n";
-            SetScreenColor(true);
             Quiz.NumberOfRightAnswers++;
         }
         else
         {
             cout << "Wrong! Correct Answer: " << Quiz.QuestionList[QuestionNumber].CorrectAnswer << endl;
-            SetScreenColor(false);
             Quiz.NumberOfWrongAnswers++;
         }
     }
@@ -184,6 +182,24 @@ void AskAndCorrectQuestionListAnswers(stQuiz& Quiz)
     Quiz.isPass = (Quiz.NumberOfRightAnswers >= Quiz.NumberOfWrongAnswers);
 }
 
+void PrintResults(stQuiz Quiz) {
+    cout << "_____________________________\n";
+    if (Quiz.isPass) {
+        cout << "You Are Pass :-)" << endl;
+        SetScreenColor(true);
+    }
+    else {
+        cout << "You Are Fail :-(" << endl;
+        SetScreenColor(false);
+    }
+    cout << "_____________________________\n";
+    cout << "Number Of Questions : " << Quiz.NumberOfQuestions << endl;
+    cout << "Questions Level     : " << Quiz.QuestionsLevel << endl;
+    cout << "Question Type       : " << Quiz.OpType << endl;
+    cout << "Right Answers       : " << Quiz.NumberOfRightAnswers << endl;
+    cout << "Wrong Answers       : " << Quiz.NumberOfWrongAnswers << endl;
+    cout << "_____________________________\n";
+}
 
 void PlayMathGame()
 {
@@ -196,9 +212,7 @@ void PlayMathGame()
         Quiz.QuestionList[QuestionNumber] = GenerateQuestion(Quiz.QuestionsLevel, Quiz.OpType);
     }
     AskAndCorrectQuestionListAnswers(Quiz);
-    cout << "\nQuiz Completed! Right Answers: " << Quiz.NumberOfRightAnswers
-        << ", Wrong Answers: " << Quiz.NumberOfWrongAnswers << "\n";
-    cout << (Quiz.isPass ? "You Passed the Quiz!\n" : "You Failed the Quiz!\n");
+    PrintResults(Quiz);
 }
 
 void StartGame() {
